@@ -1,21 +1,21 @@
 # app
 
-------Front-End------
+Front-End  -->>
 cd client
 
-To Install Peer Dependencies 
+To Install Peer Dependencies =>
 npm install
 
-To Start Front-End Server
+To Start Front-End Server =>
 npm run dev
 
-------Back-End------
+Back-End  -->>
 cd server
 
-To Install Peer Dependencies
+To Install Peer Dependencies  =>
 npm install
 
-To Start Back-End server
+To Start Back-End server  =>
 npm run dev
 
 
