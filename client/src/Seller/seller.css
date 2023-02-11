@@ -1,0 +1,66 @@
+table,
+td,
+th {
+  border: 1px solid #ddd;
+  text-align: center;
+}
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+th {
+  background-color: aliceblue;
+  padding: 10px 15px;
+}
+td {
+  padding: 5px;
+}
+.orders {
+  width: 100%;
+}
+.ongoing-orders {
+  width: 60%;
+}
+.accept-orders {
+  width: 40%;
+}
+.dark-text {
+  font-weight: 800;
+}
+.listed-products {
+  height: 80vh;
+  overflow: scroll;
+}
+
+.addProductIcon {
+  width: 250px;
+  height: 350px;
+  padding: 5px 8px;
+  margin: 10px 40px;
+  box-shadow: 1px 1px 5px #535252ad;
+
+  background-color: rgba(138, 132, 132, 0.233);
+}
+.ListedProduct {
+  padding: 5px 8px;
+  margin: 10px 40px;
+  /* background-color: antiquewhite; */
+  width: 250px;
+  height: 350px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 1px 1px 5px #535252ad;
+}
+.listedProduct-image {
+  width: 100%;
+  object-fit: contain;
+}
+.del-button {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+.addProduct-page{
+  padding: 10px 20px ;
+}

@@ -1,0 +1,8 @@
+# dependencies
+/client/node_modules
+/server/node_modules
+
+# credentials
+**/.env
+
+/client/src/Header/images

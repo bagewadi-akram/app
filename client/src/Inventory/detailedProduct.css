@@ -1,0 +1,70 @@
+.detailedProduct {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 1366px;
+  min-width: 1128px;
+}
+.left,
+.right {
+  height: 70vh;
+  width: 40vw;
+  overflow: hidden;
+  margin: 50px 20px;
+  padding: 10px 10px;
+}
+.price-box {
+  margin: 0 15px;
+}
+.new-price {
+  padding: 4px 10px;
+  font-size: 30px;
+  font-weight: 800;
+}
+.old-price,
+.discount-per {
+  padding: 8px 8px;
+  font-size: 20px;
+  font-weight: 600;
+}
+.tax-text {
+  margin: -20px 5px;
+  letter-spacing: 0.05em;
+  font-weight: 500;
+}
+.desc-text {
+  margin: 15px 0;
+  padding: 10px 0;
+}
+.downloadSheet-box {
+  overflow: hidden;
+  padding: 10px 5px;
+  width: 100%;
+  height: 100px;
+}
+.download-button {
+  background-color: #21adb2e1;
+  border: 1px solid #111111;
+  border-radius: 2px;
+  padding: 3px 15px;
+  color: #111;
+  font-weight: 800;
+}
+.download-button:hover {
+  background-color: #17a2a7;
+  letter-spacing: 0.01em;
+}
+.buy-buttons {
+  margin: 40px 5px;
+}
+.detailedProduct-button {
+  background-color: #17a2a7d3;
+  padding: 5px 15px;
+  font-weight: 800;
+  border-radius: 20px;
+  border: 1px solid rgb(75, 71, 71);
+}
+.detailedProduct-button:hover {
+  background-color: #17a2a7;
+  letter-spacing: 0.01em;
+  filter: drop-shadow(1px 1px 5px #32c2c796);
+}

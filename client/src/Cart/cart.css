@@ -1,0 +1,61 @@
+.cart {
+  margin: 10px 30px;
+  padding: 10px 30px;
+}
+.cart-heading{
+     padding: 10px 0;
+}
+.removeButton-box {
+  width: 100%;
+}
+.clear-button {
+  font-size: 14px;
+  font-weight: 500;
+  padding: 0 10px;
+  background-color: #21adb2a4;
+  border: 1px solid grey;
+  border-radius: 2px;
+  filter: drop-shadow(2px 2px 3px rgba(128, 128, 128, 0.418));
+}
+.clear-button:hover {
+  background-color: #1daeb3;
+  padding: 1px 11px;
+}
+
+.cart-items  {
+  margin: 0 35px;
+  padding: 0 35px;
+}
+
+.cartProduct {
+  position: relative;
+  width: 100%;
+  box-shadow: 2px 2px 10px rgba(128, 128, 128, 0.705);
+}
+
+.close-icon {
+  position: absolute;
+  right: 0;
+  top: 0;
+  padding: 10px 10px;
+  filter: drop-shadow(2px 2px 2px rgb(128, 128, 128));
+}
+.cart-bill{
+     margin: 20px 0;
+     padding: 5px;
+}
+.coupon-input{
+     padding: 2px 10px;
+     height: 30px;
+    border: 1px solid #252929a4;
+    border-right: none;
+}
+.coupon-button{
+     font-size: 12px;
+     font-weight: 700;
+     padding: 0 10px;
+     background-color: #21adb2a4;
+     border: 1px solid #252929a4;
+     border-left: none;
+     height: 30px;
+}

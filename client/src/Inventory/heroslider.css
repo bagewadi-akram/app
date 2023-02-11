@@ -1,0 +1,10 @@
+.heroslider-box{
+     margin: 0;
+     padding: 0;
+     position: relative;
+}
+.heroimg{
+     position: absolute;
+     top: 0;
+     left: -1px;
+}
