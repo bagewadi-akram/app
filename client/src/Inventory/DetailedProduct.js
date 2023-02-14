@@ -9,7 +9,7 @@ function DetailedProduct() {
   discount = discount / location.state.price;
   discount = Math.round(discount * 100);
   let stock = parseInt(location.state.stock);
-  //
+ 
   return (
     <div className="detailedProduct">
       <div className="d-flex flex-wrap align-items-center">

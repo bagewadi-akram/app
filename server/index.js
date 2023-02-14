@@ -1,28 +1,18 @@
+require("dotenv").config();
+const cors = require("cors");
+const express = require("express");
 const connection = require("./models/connection");
-const {
-  createProduct,
-  getProduct,
-  updateProduct,
-  deleteProduct,
-} = require("./models/CRUD_Product");
-const {
-  createUser,
-  getUser,
-  updateUser,
-  deleteUser,
-} = require("./models/CRUD_User");
 
 //Connection To DataBase
 connection();
 
-// createProduct();
-// createUser();
+//Initialization
+const app = express();
+const port = process.env.PORT;
 
-// getProduct();
-// getUser();
+//MiddleWares
+app.use(express.json());
+app.use(cors());
 
-// updateProduct();
-// updateUser();
-
-// deleteProduct();
-// deleteUser();
+//Start Node Server
+app.listen(port, console.log(`Listening to ${port} port....`));

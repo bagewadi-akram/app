@@ -3,10 +3,10 @@ import "./header.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import SearchIcon from "@mui/icons-material/Search";
 import ShoppingCart from "@mui/icons-material/ShoppingCart";
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import PermIdentityIcon from "@mui/icons-material/PermIdentity";
 import { Link } from "react-router-dom";
 import { useStateValue } from "../Context/StateProvider";
+import AccountMenu from "./log";
 
 function Header() {
   const [{ cart }] = useStateValue();
@@ -36,7 +36,7 @@ function Header() {
           to="/seller"
           style={{ color: "black", fontWeight: 700, textDecoration: "none" }}
         >
-          <span className="seller-container d-flex align-items-center">
+          <span className="seller-container d-flex align-items-center justify-content-center">
             <PermIdentityIcon />
             Seller
           </span>
@@ -46,7 +46,7 @@ function Header() {
           to="/cart"
           style={{ color: "black", fontWeight: 700, textDecoration: "none" }}
         >
-          <span className="cart-container d-flex align-items-center">
+          <span className="cart-container d-flex align-items-center justify-content-center">
             <ShoppingCart />
             Cart :
             {cart.length >= 1 ? (
@@ -72,15 +72,12 @@ function Header() {
           </span>
         </Link>
         {/* login button styling */}
-        <Link
-          to="/cart"
-          style={{ color: "black", fontWeight: 700, textDecoration: "none" }}
-        >
-          <span className="login-container d-flex align-items-center">
+      
+          {/* <span className="login-container d-flex align-items-center">
             <AccountCircleIcon />
             login
-          </span>
-        </Link>
+          </span> */}
+          <AccountMenu />
       </div>
     </div>
   );

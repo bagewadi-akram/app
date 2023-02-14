@@ -4,16 +4,14 @@ import Track from "./Track-Box";
 import CurrencyFormat from "react-currency-format";
 import Stock from "./Stock";
 import ListedProduct from "./ListedProduct";
-import {  AddSharp } from "@mui/icons-material";
-   import {  useNavigate } from "react-router-dom";
-
+import { AddSharp } from "@mui/icons-material";
+import { useNavigate } from "react-router-dom";
 
 function Seller() {
-  const navigate =useNavigate()
-  const addProduct= ()=>{
+  const navigate = useNavigate();
+  const addProduct = () => {
     navigate("/addProduct");
-
-  }
+  };
   return (
     <div className="seller m-2 p-2">
       {/* welcome quote */}
@@ -30,13 +28,13 @@ function Seller() {
             total="10,200"
             percentage="10.3"
             overview="down"
-          />{" "}
+          />
           <Track
             heading="Order Received"
             total="10"
             percentage="4"
             overview="up"
-          />{" "}
+          />
           <Track
             heading="Return & Cancelled"
             total="1"
@@ -176,7 +174,7 @@ function Seller() {
               <small>View buyer details....</small>
 
               <button>Accept</button>
-            </div>{" "}
+            </div>
             <div className="bg-light border m-2 p-1 d-flex align-items-center justify-content-between">
               <div className="">
                 <h5 className="p-0 m-0">Spacer ask adsjksd asjkasjak </h5>
@@ -255,7 +253,7 @@ function Seller() {
             price="24"
             newPrice="22"
             seller="ElectroPotent-InfoTech"
-          />{" "}
+          />
           <ListedProduct
             name="Spacer 2mm Inside"
             desc="If your knees aren't green by the end of the day, you ought to
@@ -275,7 +273,7 @@ function Seller() {
             seller="ElectroPotent-InfoTech"
           />
           <button className="border addProductIcon" onClick={addProduct}>
-              <AddSharp fontSize="large" className="text-dark" />
+            <AddSharp fontSize="large" className="text-dark" />
           </button>
         </div>
       </div>

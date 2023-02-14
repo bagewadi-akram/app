@@ -7,6 +7,9 @@ import Cart from "./Cart/Cart";
 import Seller from "./Seller/Seller";
 import AddProduct from "./Seller/AddProduct";
 import DetailedProduct from "./Inventory/DetailedProduct";
+import Profile from "./Auth/Profile";
+import SignIn from "./Auth/SignIn";
+import SignUp from "./Auth/SignUp";
 
 function App() {
   return (
@@ -40,6 +43,36 @@ function App() {
                 <Header />
                 <AddProduct />
                 <Footer />
+              </>
+            }
+          />
+          <Route
+            path="/signIn"
+            element={
+              <>
+                <Header />
+                <SignIn />
+                {/* <Footer /> */}
+              </>
+            }
+          />{" "}
+          <Route
+            path="/signup"
+            element={
+              <>
+                <Header />
+                <SignUp />
+                {/* <Footer /> */}
+              </>
+            }
+          />{" "}
+          <Route
+            path="/profile"
+            element={
+              <>
+                <Header />
+                <Profile />
+                {/* <Footer /> */}
               </>
             }
           />
