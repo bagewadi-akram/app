@@ -40,7 +40,6 @@ export default function AccountMenu() {
             aria-haspopup="true"
             aria-expanded={open ? "true" : undefined}
           >
-            {/* <Avatar sx={{ width: 26, height: 26 }}> */}
             <AccountCircleIcon />
             <small
               style={{
@@ -52,10 +51,8 @@ export default function AccountMenu() {
               }}
               key="123"
             >
-              Hii,{user && user.fname}
+              Hi,{user ? user.fname : <strong> Guest</strong>}
             </small>
-
-            {/* </Avatar> */}
           </IconButton>
         </Tooltip>
       </Box>

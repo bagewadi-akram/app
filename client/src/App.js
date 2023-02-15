@@ -3,13 +3,14 @@ import Header from "./Header/Header";
 import Footer from "./Header/Footer";
 import Inventory from "./Inventory/Inventory";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Cart from "./Cart/Cart";
 import Seller from "./Seller/Seller";
 import AddProduct from "./Seller/AddProduct";
 import DetailedProduct from "./Inventory/DetailedProduct";
 import Profile from "./Auth/Profile";
 import SignIn from "./Auth/SignIn";
 import SignUp from "./Auth/SignUp";
+import {SellerSignIn, SellerSignUp}  from "./Seller/Login";
+import Cart from "./Cart/Cart";
 
 function App() {
   return (
@@ -55,7 +56,27 @@ function App() {
                 {/* <Footer /> */}
               </>
             }
-          />{" "}
+          />
+          <Route
+            path="/sellerSignIn"
+            element={
+              <>
+                <Header />
+                <SellerSignIn />
+                {/* <Footer /> */}
+              </>
+            }
+          />
+          <Route
+            path="/sellerSignUp"
+            element={
+              <>
+                <Header />
+                <SellerSignUp />
+                {/* <Footer /> */}
+              </>
+            }
+          />
           <Route
             path="/signup"
             element={

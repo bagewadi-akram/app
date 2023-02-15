@@ -1,124 +1,117 @@
-import * as React from "react";
-import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
-import CssBaseline from "@mui/material/CssBaseline";
-import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
-import Link from "@mui/material/Link";
-import Grid from "@mui/material/Grid";
-import Box from "@mui/material/Box";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import Typography from "@mui/material/Typography";
-import Container from "@mui/material/Container";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { Link, useNavigate } from "react-router-dom";
+import { useState } from "react";
+import "./Style.css";
 import { useStateValue } from "../Context/StateProvider";
+import IconButton from "@mui/material/IconButton";
+import InputAdornment from "@mui/material/InputAdornment";
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import TextField from "@mui/material/TextField";
+import InputLabel from "@mui/material/InputLabel";
+import FilledInput from "@mui/material/FilledInput";
+import FormControl from "@mui/material/FormControl";
+import { Checkbox } from "@mui/material";
 
-function Copyright(props) {
-  return (
-    <Typography
-      variant="body2"
-      color="text.secondary"
-      align="center"
-      {...props}
-    >
-      {"Copyright © "}
-      <Link color="inherit" href="/">
-        .store.com
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-}
-
-const theme = createTheme();
-
-export default function SignIn() {
+function SignIn() {
   //eslint-disable-next-line
   const [{ user }, dispatch] = useStateValue();
+ const navigate = useNavigate();
+  const [showPassword, setShowPassword] = useState(false);
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
+  };
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    
+    console.log("data :>> ", data);
     dispatch({
       type: "SET_USER",
-      user: { email: data.get("email"), password: data.get("password") },
+      user: { email: data.get("email"), password: data.get("pass") },
     });
+    navigate('/profile')
   };
 
   return (
-    <ThemeProvider theme={theme}>
-      <Container component="main" maxWidth="xs">
-        <CssBaseline />
-        <Box
-          sx={{
-            marginTop: 8,
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-          }}
-        >
-          <Avatar sx={{ m: 1, p: 3, bgcolor: "black" }}>
-            <LockOutlinedIcon />
-          </Avatar>
-          <Typography component="h1" variant="h5">
-            Sign in
-          </Typography>
-          <Box
-            component="form"
-            onSubmit={handleSubmit}
-            noValidate
-            sx={{ mt: 1 }}
+    <div className="loginPage d-flex flex-column ">
+      <div className="m-4 pb-3 align-self-center">
+        <Link to="/">
+          <img
+            src="https://www.dreamhost.com/assets/domains/logo.store.color-b8b6423a038c3ba1b637f437c7b861bd7001bdffb7ecc9c4f39e12203e4122f7.svg"
+            alt=""
+            width="170"
+            height="50"
+          />
+        </Link>
+      </div>
+      <form onSubmit={handleSubmit}>
+        <div className="d-flex flex-column p-3">
+          <h4 className="ms-2 mb-2">Log IN </h4>
+          {/* {errors.exampleRequired && <span>This field is required</span>} */}
+          <TextField
+            id="fullWidth"
+            label="Enter Your Email"
+            variant="filled"
+            fullWidth
+            className="mb-3"
+            name="email"
+            required="true"
+          />
+          <FormControl fullWidth>
+            <InputLabel htmlFor="outlined-adornment-password">
+              Enter Your Password
+            </InputLabel>
+
+            <FilledInput
+              id="filled-adornment-password"
+              name="pass"
+              variant="filled"
+              type={showPassword ? "text" : "password"}
+              required="true"
+              endAdornment={
+                <InputAdornment position="end">
+                  <IconButton
+                    aria-label="toggle password visibility"
+                    onClick={handleClickShowPassword}
+                    onMouseDown={handleMouseDownPassword}
+                    edge="end"
+                  >
+                    {showPassword ? <VisibilityOff /> : <Visibility />}
+                  </IconButton>
+                </InputAdornment>
+              }
+              className="mb-3"
+            />
+          </FormControl>
+          <small>
+            <Checkbox />
+            Agree to all <strong>Terms & Conditions</strong>
+          </small>
+          <button
+            type="submit"
+            // onClick={handleSubmit}
+            className="loginPage-button"
           >
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              id="email"
-              label="Email Address"
-              name="email"
-              autoComplete="email"
-              autoFocus
-            />
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              name="password"
-              label="Password"
-              type="password"
-              id="password"
-              autoComplete="current-password"
-            />
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
-            />
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2 }}
-            >
-              Sign In
-            </Button>
-            <Grid container>
-              <Grid item xs>
-                <Link href="#" variant="body2">
-                  Forgot password?
-                </Link>
-              </Grid>
-              <Grid item>
-                <Link href="/signUp" variant="body2">
-                  {"Don't have an account? Sign Up"}
-                </Link>
-              </Grid>
-            </Grid>
-          </Box>
-        </Box>
-        <Copyright sx={{ mt: 8, mb: 4 }} />
-      </Container>
-    </ThemeProvider>
+            Click Here To Proceed
+          </button>
+          <Link
+            to="/signUp"
+            style={{
+              color: "#111",
+              textAlign: "right",
+              fontWeight: 400,
+            }}
+          >
+            New to STORE? Create an account
+          </Link>
+        </div>
+      </form>
+      <span className="text-muted d-flex align-items-center align-self-center">
+        Copyright <Link to="/"> store.com</Link>
+        {new Date().getFullYear()}.
+      </span>
+    </div>
   );
 }
+
+export default SignIn;

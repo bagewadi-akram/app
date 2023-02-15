@@ -1,81 +1,115 @@
-import React from "react";
+import React,{useState} from "react";
 import "./cart.css";
-import CartProduct from "./CartProduct";
-import { useStateValue } from "../Context/StateProvider";
-import { useNavigate } from "react-router";
+
+import ReviewProducts from "./ReviewProducts";
+import AddAddress from "./AddAddress";
+import Payment from "./Payment";
+
+import Paper from "@mui/material/Paper";
+import Typography from "@mui/material/Typography";
+import Box from "@mui/material/Box";
+import Stepper from "@mui/material/Stepper";
+import Step from "@mui/material/Step";
+import StepLabel from "@mui/material/StepLabel";
+import StepContent from "@mui/material/StepContent";
 import Button from "@mui/material/Button";
-import SendIcon from "@mui/icons-material/Send";
 
 function Cart() {
-  const navigate = useNavigate();
-  const [{ cart }, dispatch] = useStateValue();
-  const clearCart = () => {
-    if (cart.length === 0) {
-      console.log("Your Cart is Empty");
-      alert("Your Cart is Empty");
-    } else {
-      dispatch({
-        type: "EMPTY_CART",
-      });
-    }
+  const steps = [
+    {
+      label: "Select campaign settings",
+      description: `For each ad campaign that you create, you can control how much
+              you're willing to spend on clicks and conversions, which networks
+              and geographical locations you want your ads to show on, and more.`,
+    },
+    {
+      label: "Create an ad group",
+      description:
+        "An ad group contains one or more ads which target a shared set of keywords.",
+    },
+    {
+      label: "Create an ad",
+      description: `Try out different ad text to see what brings in the most customers,
+              and learn how to enhance your ads using features like ad extensions.
+              If you run into any problems with your ads, find out how to tell if
+              they're running and how to resolve approval issues.`,
+    },
+  ];
+
+  const first = <ReviewProducts />;
+  const second = <AddAddress />;
+  const third = <Payment />;
+  const [activeStep, setActiveStep] = useState(0);
+
+  const handleNext = () => {
+    setActiveStep((prevActiveStep) => prevActiveStep + 1);
   };
-  const emptyCart = (
-    <strong className="text-dark d-flex  align-items-center">
-      Please add products to cart{" "}
-      <Button
-        variant="contained"
-        endIcon={<SendIcon />}
-        size="small"
-        className="text-bold text-dark m-2 bg-info pt-2"
-        onClick={() => navigate("/")}
-      >
-        Go Shopping
-      </Button>
-    </strong>
-  );
+
+  const handleBack = () => {
+    setActiveStep((prevActiveStep) => prevActiveStep - 1);
+  };
+  const handleReset = () => {
+    setActiveStep(0);
+  };
   return (
-    <div className="cart">
-      {/* heading welcome quote */}
-      <h3 className="cart-heading">Welcome, Guest</h3>
-      {/* heading and clear cart button */}
-      <span className="removeButton-box d-flex flex-row align-items-center justify-content-between">
-        <h5>Your Products....</h5>
-        <button className="clear-button" onClick={clearCart}>
-          Clear Cart
-        </button>
-      </span>
-      {/* contextAPI items or cart products */}
-      <div className="cart-items d-flex flex-column align-items-center justify-content-around ">
-        {cart.map((item) => (
-          <CartProduct
-            key={item.id}
-            id={item.id}
-            name={item.name}
-            desc={item.desc}
-            image={item.image}
-            price={item.price}
-            newPrice={item.newPrice}
-            seller={item.seller}
-            stock={item.stock}
-          />
-        ))}
-        {cart.length === 0 ? emptyCart : ""}
-        {/* :'Please go shopping'} */}
-      </div>
-      {/* bill */}
-      <div className="cart-bill d-flex flex-column align-items-start justify-content-around">
-        <div className="d-flex flex-column align-items-start justify-content-around ">
-          <h4>Apply Coupon Code.</h4>
-          <span className="d-flex align-items-center">
-            <input
-              type="text"
-              className="coupon-input"
-              placeholder="Enter your coupon here"
-            />
-            <button className="coupon-button">Enter</button>
-          </span>
+    <div className="cartNew">
+      <div className="cartHeading">heading</div>
+      <div className="cartContent">
+        <div className="stepper">
+          <Box sx={{ maxWidth: 400 }}>
+            <Stepper activeStep={activeStep} orientation="vertical">
+              {steps.map((step, index) => (
+                <Step key={step.label}>
+                  <StepLabel
+                    optional={
+                      index === 2 ? (
+                        <Typography variant="caption">Last step</Typography>
+                      ) : null
+                    }
+                  >
+                    {step.label}
+                  </StepLabel>
+                  <StepContent>
+                    <Typography>{step.description}</Typography>
+                    <Box sx={{ mb: 2 }}>
+                      <div>
+                        <Button
+                          variant="contained"
+                          onClick={handleNext}
+                          sx={{ mt: 1, mr: 1 }}
+                        >
+                          {index === steps.length - 1 ? "Finish" : "Continue"}
+                        </Button>
+                        <Button
+                          disabled={index === 0}
+                          onClick={handleBack}
+                          sx={{ mt: 1, mr: 1 }}
+                        >
+                          Back
+                        </Button>
+                      </div>
+                    </Box>
+                  </StepContent>
+                </Step>
+              ))}
+            </Stepper>
+            {activeStep === steps.length && (
+              <Paper square elevation={0} sx={{ p: 3 }}>
+                <Typography>
+                  All steps completed - you&apos;re finished
+                </Typography>
+                <Button onClick={handleReset} sx={{ mt: 1, mr: 1 }}>
+                  Reset
+                </Button>
+              </Paper>
+            )}
+          </Box>
         </div>
-        <div></div>
+        <div className="cartItems">
+          {activeStep === 0 && first}
+          {activeStep === 1 && second}
+          {activeStep === 2 && third}
+        </div>
       </div>
     </div>
   );

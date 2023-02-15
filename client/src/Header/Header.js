@@ -31,14 +31,14 @@ function Header() {
         />
         <SearchIcon fontSize="medium" />
       </div>
-      <div className="icon-container d-flex align-items-center">
+      <div className="icon-container d-flex flex-wrap align-items-center justify-content-center">
         <Link
-          to="/seller"
+          to="/sellerSignUp"
           style={{ color: "black", fontWeight: 700, textDecoration: "none" }}
         >
-          <span className="seller-container d-flex align-items-center justify-content-center">
+          <span className="seller-container d-flex flex-wrap align-items-center ">
             <PermIdentityIcon />
-            Seller
+            <strong> Seller</strong>
           </span>
         </Link>
         {/* cart button styling */}
@@ -46,38 +46,32 @@ function Header() {
           to="/cart"
           style={{ color: "black", fontWeight: 700, textDecoration: "none" }}
         >
-          <span className="cart-container d-flex align-items-center justify-content-center">
+          <span className="cart-container d-flex align-items-center ">
             <ShoppingCart />
-            Cart :
-            {cart.length >= 1 ? (
-              <span className="cartLength-box ">{cart.length}</span>
-            ) : (
-              "Cart is Empty"
-            )}
+              Cart :
+              {cart.length >= 1 ? (
+                <span className="cartLength-box ">{cart.length}</span>
+              ) : (
+                "Cart is Empty"
+              )}
             <div className="cartProducts-hover">
-              
               {cart.map((item) => (
                 <div
                   key={item.id}
                   className="d-flex flex-row align-items-center bg-light border m-2"
                 >
                   <img src={item.image} alt={item.name} height={50} />
-                    <small className="d-flex flex-column p-1 ml-1">
-                      <strong>{item.name}</strong>
-                      <strong>{item.newPrice}</strong>
-                    </small>
+                  <small className="d-flex flex-column p-1 ml-1">
+                    <strong>{item.name}</strong>
+                    <strong>{item.newPrice}</strong>
+                  </small>
                 </div>
               ))}
             </div>
           </span>
         </Link>
-        {/* login button styling */}
-      
-          {/* <span className="login-container d-flex align-items-center">
-            <AccountCircleIcon />
-            login
-          </span> */}
-          <AccountMenu />
+        
+        <AccountMenu />
       </div>
     </div>
   );

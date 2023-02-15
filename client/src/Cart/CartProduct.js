@@ -5,6 +5,7 @@ import RemoveIcon from "@mui/icons-material/Remove";
 import CloseRoundedIcon from "@mui/icons-material/Close";
 import { useStateValue } from "../Context/StateProvider";
 import { useNavigate } from "react-router-dom";
+import { CurrencyRupee } from "@mui/icons-material";
 
 function CartProduct({ name, desc, image, price, newPrice, seller, id }) {
 
@@ -37,22 +38,29 @@ function CartProduct({ name, desc, image, price, newPrice, seller, id }) {
     });
   };
   return (
-    <div className="cartProduct d-flex flex-wrap align-items-center justify-content-around p-2 m-2">
+    <div className="proBox d-flex flex-wrap align-items-center ps-4 pe-4 m-2">
       <img src={image} alt={name} className="" height={180} />
-      <div className="p-2" onClick={productDetails}>
-        <h5>{name}</h5>
-        <p className="mb-0 text-secondary text-sm">{desc}</p>
-        <small>{seller}</small>
+      <div className="ps-4 ms-4" onClick={productDetails}>
+        <h4 className="pt-0 pb-0 mt-0 mb-0">{name}</h4>
+        <small>
+          seller:<strong>{seller}</strong>
+        </small>
         <span className="d-flex flex-row align-items-center ">
-          <s className="p-1">{price}</s>
-          <strong className="p-1">{newPrice}</strong>
+          <s className="p-1">
+            <CurrencyRupee fontSize="small" />
+            {price}
+          </s>
+          <strong className="p-1">
+            <CurrencyRupee fontSize="small" />
+            {newPrice}
+          </strong>
         </span>
         <p>Free Delivery Above $499 </p>
         <span className="d-flex flex-row align-items-center justify-content-around">
           <RemoveIcon />1<AddIcon />
         </span>
       </div>
-      <span className="close-icon" onClick={removeProduct}>
+      <span className="close-icon " onClick={removeProduct}>
         <CloseRoundedIcon fontSize="medium" />
       </span>
     </div>

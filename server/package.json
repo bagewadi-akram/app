@@ -4,7 +4,7 @@
   "description": "This backend of App store",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon index.js"
+    "app": "nodemon index.js"
   },
   "author": "@bagewadi_akram",
   "license": "ISC",
