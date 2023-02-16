@@ -11,6 +11,7 @@ import SignIn from "./Auth/SignIn";
 import SignUp from "./Auth/SignUp";
 import {SellerSignIn, SellerSignUp}  from "./Seller/Login";
 import Cart from "./Cart/Cart";
+import FilteredProducts from "./Inventory/FilteredProducts";
 
 function App() {
   return (
@@ -73,6 +74,16 @@ function App() {
               <>
                 <Header />
                 <SellerSignUp />
+                {/* <Footer /> */}
+              </>
+            }
+          />
+          <Route
+            path="/filteredProducts"
+            element={
+              <>
+                <Header />
+                <FilteredProducts />
                 {/* <Footer /> */}
               </>
             }

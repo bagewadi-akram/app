@@ -1,14 +1,28 @@
 import React from 'react'
 import './inventory.css'
+import { Button } from "@mui/material";
+
 
 function Category({title}) {
   return (
     <div className="m-4 p-2 border">
       <h3 className="p-3 border mb-0 d-flex justify-content-between align-items-center bg-light">
         {title}....
-        <button className="view-all" onClick="">
-          View All..
-        </button>
+        <Button
+          variant="contained"
+          size="small"
+          sx={{
+            letterSpacing: 1.5,
+            fontWeight: 700,
+            color: "#111",
+            background: "#2abc",
+            padding: "10px 35px 3px",
+            fontSize: 14,
+          }}
+          // onClick={}
+        >
+          View All
+        </Button>
       </h3>
       <div className="d-flex flex-wrap align-items-center justify-content-around p-5 ">
         <div className="category-container ">

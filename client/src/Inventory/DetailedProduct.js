@@ -2,14 +2,17 @@ import "./detailedProduct.css";
 import { useLocation } from "react-router-dom";
 import CurrencyFormat from "react-currency-format";
 import Section from "./Section";
+import { useState } from "react";
+import { Button } from "@mui/material";
 
 function DetailedProduct() {
   const location = useLocation();
+  const [image, setImage] = useState(location.state.image);
   let discount = location.state.price - location.state.newPrice;
   discount = discount / location.state.price;
   discount = Math.round(discount * 100);
   let stock = parseInt(location.state.stock);
- 
+
   return (
     <div className="detailedProduct">
       <div className="d-flex flex-wrap align-items-center">
@@ -19,7 +22,7 @@ function DetailedProduct() {
             <div>
               <img
                 className="border m-1"
-                src={location.state.image}
+                src={image}
                 alt={location.state.image}
                 height={425}
                 width={490}
@@ -31,24 +34,28 @@ function DetailedProduct() {
                 src={location.state.image}
                 alt={location.state.image}
                 height={100}
+                onClick={() => setImage(location.state.image)}
               />
               <img
                 className="border m-1"
                 src={location.state.image}
                 alt={location.state.image}
                 height={100}
+                onClick={() => setImage(location.state.image)}
               />
               <img
                 className="border m-1"
                 src={location.state.image}
                 alt={location.state.image}
                 height={100}
+                onClick={() => setImage(location.state.image)}
               />
               <img
                 className="border m-1"
                 src={location.state.image}
                 alt={location.state.image}
                 height={100}
+                onClick={() => setImage(location.state.image)}
               />
             </div>
           </div>
@@ -115,11 +122,54 @@ function DetailedProduct() {
               <h5 className="">Download Data Sheet Here</h5>
               <p className="p-0 m-0">Product Code: 2012</p>
             </span>
-            <button className="download-button">Download</button>
+            <Button
+              variant="contained"
+              size="small"
+              sx={{
+                letterSpacing: 1.5,
+                fontWeight: 700,
+                color: "#111",
+                background: "#2abc",
+                padding: "10px 35px 3px",
+                fontSize: 14,
+              }}
+              className="download-button"
+              // onClick={}
+            >
+              Download
+            </Button>
           </div>
           <div className="d-flex align-items-center justify-content-around buy-buttons">
-            <button className="detailedProduct-button">Add To Cart</button>
-            <button className="detailedProduct-button"> WishList</button>
+            <Button
+              variant="contained"
+              size="small"
+              sx={{
+                letterSpacing: 1.5,
+                fontWeight: 700,
+                color: "#111",
+                background: "#2abc",
+                padding: "10px 35px 3px",
+                fontSize: 14,
+              }}
+              // onClick={}
+            >
+              Add to Cart
+            </Button>
+            <Button
+              variant="contained"
+              size="small"
+              sx={{
+                letterSpacing: 1.5,
+                fontWeight: 700,
+                color: "#111",
+                background: "#2abc",
+                padding: "10px 35px 3px",
+                fontSize: 14,
+              }}
+              // onClick={}
+            >
+              Buy Now
+            </Button>
           </div>
         </div>
       </div>

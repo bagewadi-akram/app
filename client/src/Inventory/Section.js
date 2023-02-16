@@ -1,15 +1,29 @@
 import "./inventory.css";
 import React from "react";
 import Product from "./Product";
+import { Button } from "@mui/material";
+
 
 function Section({ title }) {
   return (
     <div className="m-4 p-2 border">
       <h3 className="p-3 bg-light border mb-0 d-flex justify-content-between align-items-center">
         {title}...
-        <button className="view-all" onClick="">
-          View All..
-        </button>
+        <Button
+          variant="contained"
+          size="small"
+          sx={{
+            letterSpacing: 1.5,
+            fontWeight: 700,
+            color: "#111",
+            background: "#2abc",
+            padding: "10px 35px 3px",
+            fontSize: 14,
+          }}
+          // onClick={}
+        >
+          View All
+        </Button>
       </h3>
       <div className="d-flex flex-wrap align-items-center justify-content-around mt-0 ">
         <Product
@@ -48,7 +62,6 @@ function Section({ title }) {
           newPrice="22"
           seller="ElectroPotent-InfoTech"
         />
-        
       </div>
       <div className="d-flex flex-wrap align-items-center justify-content-around mt-0 ">
         <Product

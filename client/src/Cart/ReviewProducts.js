@@ -8,7 +8,7 @@ import { useNavigate } from "react-router";
 
 
 function ReviewProducts() {
-  const [{ cart, user }, dispatch] = useStateValue();
+  const [{ cart }, dispatch] = useStateValue();
   const navigate = useNavigate();
 
 const clearCart = () => {
@@ -41,6 +41,24 @@ const emptyCart = (
     </Button>
   </strong>
 );
+const billAndCoupon=( <div className="bilCouponBox">
+        <div className="coupon">
+          <div className="d-flex flex-column align-items-start justify-content-around ">
+            <h4>Apply Coupon Code.</h4>
+            <span className="d-flex align-items-center">
+              <input
+                type="text"
+                className="coupon-input"
+                placeholder="Enter your coupon here"
+              />
+              <button className="coupon-button">Enter</button>
+            </span>
+          </div>
+        </div>
+        <div className="bill d-flex  justify-content-end">
+          <h2>Entering total on bill</h2>
+        </div>
+      </div>)
 
   return (
     <div className="changingBox">
@@ -58,7 +76,7 @@ const emptyCart = (
               paddingBottom: 0,
             }}
           >
-            view all
+            Remove all
           </Button>
         </span>
         {/* map products here */}
@@ -76,27 +94,11 @@ const emptyCart = (
               stock={item.stock}
             />
           ))}
-          {cart.length === 0 ? emptyCart : ""}
+          {cart.length === 0 &&emptyCart}
         </div>
+        {cart.length !== 0&& billAndCoupon}
       </div>
-      <div className="bilCouponBox">
-        <div className="coupon">
-          <div className="d-flex flex-column align-items-start justify-content-around ">
-            <h4>Apply Coupon Code.</h4>
-            <span className="d-flex align-items-center">
-              <input
-                type="text"
-                className="coupon-input"
-                placeholder="Enter your coupon here"
-              />
-              <button className="coupon-button">Enter</button>
-            </span>
-          </div>
-        </div>
-        <div className="bill d-flex  justify-content-end">
-          <h2>Entering total on bill</h2>
-        </div>
-      </div>
+     
     </div>
   );
 }
