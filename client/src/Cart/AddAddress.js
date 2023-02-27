@@ -1,29 +1,69 @@
 import { TextField } from "@mui/material";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import Button from "@mui/material/Button";
+import axios from "axios";
+const url = "http://localhost:3003/address";
 
 function AddAddress() {
-  const [stateName, setStateName] = useState([]);
-  const [stateNameTo, setStateNameTo] = useState();
-  const url =
-    "https://api.data.gov.in/resource/6176ee09-3d56-4a3b-8115-21841576b2f6";
-  const api_key = "579b464db66ec23bdd0000011556a9e6254d4fea4089432643e3f116";
-  const querystring = `?api-key=${api_key}&format=json&offset=0&limit=155570`;
+  const [postal, setPostal] = useState([]); //State Consists of All Data
+  const [states, setStates] = useState([]); //State Consists of only States Data
+  const [button, setButton] = useState(true); //State Consists of only States Data
 
-  fetch(url + querystring)
-    .then((response) => response.json())
-    .then((data) => {
-      const states = data.records.map((item) => item.statename);
-      const uniqueArr = [...new Set(states)];
-      setStateName(uniqueArr);
-    })
-    .catch((error) => console.error(error));
+  const [formData, setFormData] = useState({
+    fname: "",
+    lname: "",
+    addressField1: "",
+    addressField2: "",
+    phone: "",
+    state: "",
+    district: "",
+    pin_code: "",
+  });
+  useEffect(() => {
+    //fetch States and Cities from Api
+    axios.get(url).then((res) => {
+      const data = res.data;
+      setPostal(data);
+      let temp = [];
+      data.filter(function (item) {
+        let i = temp.findIndex((x) => x.state === item.state);
+        if (i <= -1) {
+          temp.push(item);
+        }
+        return null;
+      });
+      setStates(temp);
+    });
+  }, []);
+
+  //Show All Cities Of The State ...
+  let city = [];
+  postal.forEach((element) => {
+    if (element.state === formData.state) {
+      city.push(element.district);
+    }
+  });
+  city = city.filter((item, i, ar) => ar.indexOf(item) === i);
+
   const handleChange = (event) => {
-    setStateNameTo(event.target.value);
+    const { name, value } = event.target;
+    setFormData((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  };
+  const handleClick = () => {
+    let result = !Object.values(formData).every((o) => o === "");
+    if (result === true) {
+      setButton(false);
+      console.log("formData :>> ", formData);
+    } else {
+      alert("Please Enter Values");
+    }
   };
 
   return (
@@ -38,6 +78,8 @@ function AddAddress() {
             id="outlined"
             name="fname"
             label="First Name *"
+            value={formData.fname}
+            onChange={handleChange}
           />
           <TextField
             sx={{ width: 400, margin: 2 }}
@@ -46,6 +88,8 @@ function AddAddress() {
             id="outlined"
             name="lname"
             label="Last Name *"
+            value={formData.lname}
+            onChange={handleChange}
           />
         </div>
         <div className="d-flex flex-column  justify-content-between">
@@ -54,7 +98,9 @@ function AddAddress() {
             margin="normal"
             variant="outlined"
             id="outlined"
-            name="address1"
+            name="addressField1"
+            value={formData.addressField1}
+            onChange={handleChange}
             label="Address *"
           />
           <TextField
@@ -62,48 +108,67 @@ function AddAddress() {
             margin="normal"
             variant="outlined"
             id="outlined"
-            name="address2"
+            name="addressField2"
+            value={formData.addressField2}
             label="Apartment, suit, etc,(optional)"
+            onChange={handleChange}
           />
           <TextField
             sx={{ margin: 2 }}
             margin="normal"
             variant="outlined"
             id="outlined"
-            name="address2"
+            name="phone"
+            value={formData.phone}
             label="Phone *"
+            onChange={handleChange}
           />
         </div>
         <div className="d-flex justify-content-between">
           <FormControl sx={{ width: 300, margin: 2 }}>
-            <InputLabel id="demo-simple-select-label">State</InputLabel>
+            <InputLabel id="demo-multiple-name-label">State *</InputLabel>
             <Select
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
-              value={stateNameTo}
-              label="State Name"
+              labelId="demo-multiple-name-label"
+              id="demo-multiple-name"
+              label="State Name *"
+              name="state"
+              value={formData.state}
               onChange={handleChange}
             >
-              {stateName.map((item) => (
-                <MenuItem value={item}>{item}</MenuItem>
+              {states.map((item) => (
+                <MenuItem value={item.state} key={item.state}>
+                  {item.state}
+                </MenuItem>
               ))}
             </Select>
           </FormControl>
+          <FormControl sx={{ width: 300, margin: 2 }}>
+            <InputLabel id="demo-multiple-name-label">City *</InputLabel>
+            <Select
+              labelId="demo-multiple-name-label"
+              id="demo-multiple-name"
+              label="City *"
+              value={formData.district}
+              onChange={handleChange}
+              name="district"
+            >
+              {city.map((item) => (
+                <MenuItem value={item} key={item}>
+                  {item}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+
           <TextField
             sx={{ width: 300, margin: 2 }}
             margin="normal"
             variant="outlined"
             id="outlined"
-            name="address1"
-            label="City *"
-          />
-          <TextField
-            sx={{ width: 300, margin: 2 }}
-            margin="normal"
-            variant="outlined"
-            id="outlined"
-            name="pinCode"
+            name="pin_code"
             label="Pin Code *"
+            value={formData.pin_code}
+            onChange={handleChange}
           />
         </div>
         <div className="d-flex justify-content-end">
@@ -120,9 +185,9 @@ function AddAddress() {
               margin: 2,
               fontSize: 14,
             }}
-            // onClick={}
+            onClick={handleClick}
           >
-            Submit
+            Submit{" "}
           </Button>
         </div>
       </form>

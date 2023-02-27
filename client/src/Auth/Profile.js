@@ -1,6 +1,7 @@
 import "./Style.css";
 
 function Profile() {
+
   return (
     <div className="profile">
       <div>{/* Add user Details Here */}</div>
