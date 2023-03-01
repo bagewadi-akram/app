@@ -21,26 +21,27 @@ const Product = new mongoose.model("Product", productDetails);
 const userDetails = new mongoose.Schema({
   _id: String,
   u_email: { type: String, required: true },
-  u_name: String,
+  u_fname: { type: String, required: true },
+  u_lname: String,
   u_password: String,
   u_type: { type: String, required: true },
   u_isVerified: Boolean,
-  u_cart: {
-    product_inCart: {
-      id: {
-        type: String,
-        required: true,
-      },
-      date: { type: String, default:new Date() }, //date when added to cart
-    },
-  },
-  u_orders: {
-    products_delivered: {
-      id: { type: String, required: true },
-      payment: String,
-    },
-    products_canceled: { id: { type: String, required: true } },
-  },
+  // u_cart: {
+  //   product_inCart: {
+  //     id: {
+  //       type: String,
+  //       required: true,
+  //     },
+  //     date: { type: String, default:new Date() }, //date when added to cart
+  //   },
+  // },
+  // u_orders: {
+  //   products_delivered: {
+  //     id: { type: String, required: true },
+  //     payment: String,
+  //   },
+  //   products_canceled: { id: { type: String, required: true } },
+  // },
 });
 
 const User = new mongoose.model("User", userDetails);

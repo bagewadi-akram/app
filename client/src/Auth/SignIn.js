@@ -11,25 +11,40 @@ import InputLabel from "@mui/material/InputLabel";
 import FilledInput from "@mui/material/FilledInput";
 import FormControl from "@mui/material/FormControl";
 import { Checkbox } from "@mui/material";
+import ErrorIcon from "@mui/icons-material/Error";
+import axios from "axios";
 
 function SignIn() {
   //eslint-disable-next-line
   const [{ user }, dispatch] = useStateValue();
- const navigate = useNavigate();
+  const [error, setError] = useState("");
+  const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
+  const url = "http://localhost:8080/signIn";
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
   };
   const handleClickShowPassword = () => setShowPassword((show) => !show);
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log("data :>> ", data);
-    dispatch({
-      type: "SET_USER",
-      user: { email: data.get("email"), password: data.get("pass") },
-    });
-    navigate('/profile')
+    try {
+      const temp = await axios.post(url, {
+        email: data.get("email"),
+        password: data.get("pass"),
+      });
+      const { message } = temp.data;
+      alert(message);
+      if (temp.status == 200) {
+        dispatch({
+          type: "SET_USER",
+          user: { email: data.get("email"), password: data.get("pass") },
+        });
+        navigate("/profile");
+      }
+    } catch (error) {
+      setError("Please Check Your Network...");
+    }
   };
 
   return (
@@ -46,8 +61,16 @@ function SignIn() {
       </div>
       <form onSubmit={handleSubmit}>
         <div className="d-flex flex-column p-3">
+          {error && (
+            <strong
+              className=" border border-danger rounded  text-danger ps-2 pt-1 pb-1 d-flex align-items-center"
+              style={{ backgroundColor: "#e8342721" }}
+            >
+              <ErrorIcon sx={{ padding: "2px" ,marginRight:"2px" }} />
+              {error}
+            </strong>
+          )}
           <h4 className="ms-2 mb-2">Log IN </h4>
-          {/* {errors.exampleRequired && <span>This field is required</span>} */}
           <TextField
             id="fullWidth"
             label="Enter Your Email"

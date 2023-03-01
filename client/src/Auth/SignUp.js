@@ -11,30 +11,48 @@ import InputLabel from "@mui/material/InputLabel";
 import FilledInput from "@mui/material/FilledInput";
 import FormControl from "@mui/material/FormControl";
 import { Checkbox } from "@mui/material";
+import axios from "axios";
+import ErrorIcon from "@mui/icons-material/Error";
 
 function SignUp() {
   //eslint-disable-next-line
   const [{ user }, dispatch] = useStateValue();
+  const [error, setError] = useState("");
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
+  const url = "http://localhost:8080/signUp";
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
   };
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    dispatch({
-      type: "SET_USER",
-      user: {
+    try {
+      const temp = await axios.post(url, {
         fname: data.get("fname"),
         lname: data.get("lname"),
         email: data.get("email"),
         password: data.get("pass"),
-      },
-    });
-    navigate("/signIn");
+      });
+      const { message } = temp.data;
+      alert(message);
+      if (temp.status == 200) {
+        dispatch({
+          type: "SET_USER",
+          user: {
+            fname: data.get("fname"),
+            lname: data.get("lname"),
+            email: data.get("email"),
+            password: data.get("pass"),
+          },
+        });
+        navigate("/signIn");
+      }
+    } catch (error) {
+      setError("Please Check Your Network...");
+    }
   };
   return (
     <div className="loginPage d-flex flex-column">
@@ -50,8 +68,16 @@ function SignUp() {
       </div>
       <form onSubmit={handleSubmit}>
         <div className="d-flex flex-column p-3">
+          {error && (
+            <strong
+              className=" border border-danger rounded  text-danger ps-2 pt-1 pb-1 d-flex align-items-center"
+              style={{ backgroundColor: "#e8342721" }}
+            >
+              <ErrorIcon sx={{ padding: "2px", marginRight: "2px" }} />
+              {error}
+            </strong>
+          )}
           <h4 className="ms-2 mb-2">Sign Up </h4>
-
           <div className="d-flex flex-row justify-content-between">
             <TextField
               label="First Name"
@@ -70,6 +96,7 @@ function SignUp() {
               sx={{ width: "180px" }}
             />
           </div>
+
           <TextField
             id="fullWidth"
             label="Enter Your Email"

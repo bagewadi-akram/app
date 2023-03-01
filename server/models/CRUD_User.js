@@ -1,36 +1,37 @@
 const mongoose = require("mongoose");
 
-//Importing User Model/Schema 
+//Importing User Model/Schema
 const { User } = require("./Schema");
 
 //Create Read Update Delete Operation to DataBase
 //For Create Operation
-const createUser = async () => {
+const createUser = async ({ email, fname, lname, password }) => {
   try {
     const doc = new User({
-      _id: "str124",
-      u_email: "Abcd@gmail.com",
-      u_name: "abcd ",
-      u_password: "12345abcd",
+      _id: "str121",
+      u_email: email,
+      u_fname: fname,
+      u_lname: lname,
+      u_password: password,
       u_type: "buyer",
       u_isVerified: true,
-      u_cart: {
-        product_inCart: {
-          id: "pro1231",
-        },
-      },
-      u_orders: {
-        products_delivered: {
-          id: "pro1232",
-          payment: "UPI",
-        },
-        products_canceled: { id: "pro1233" },
-      },
+      // u_cart: {
+      //   product_inCart: {
+      //     id: "pro1231",
+      //   },
+      // },
+      // u_orders: {
+      //   products_delivered: {
+      //     id: "pro1232",
+      //     payment: "UPI",
+      //   },
+      //   products_canceled: { id: "pro1233" },
+      // },
     });
     const result = await doc.save();
     console.log(result);
   } catch (err) {
-    console.log(err.message);
+    return err;
   }
 };
 
