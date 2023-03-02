@@ -1,4 +1,6 @@
 const mongoose = require("mongoose");
+const shortid = require("shortid");
+const bcrypt = require("bcrypt");
 
 //Importing User Model/Schema
 const { User } = require("./Schema");
@@ -6,45 +8,48 @@ const { User } = require("./Schema");
 //Create Read Update Delete Operation to DataBase
 //For Create Operation
 const createUser = async ({ email, fname, lname, password }) => {
+  const customerId = shortid.generate();
+  async function hashPassword(password) {
+    const saltRounds = 10;
+    return new Promise((resolve, reject) => {
+      bcrypt.hash(password, saltRounds, (err, hash) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(hash);
+        }
+      });
+    });
+  }
+  const hashedPassword = await hashPassword(password);
   try {
     const doc = new User({
-      _id: "str121",
-      u_email: email,
+      _id: `#str${customerId}`,
       u_fname: fname,
       u_lname: lname,
-      u_password: password,
+      u_email: email,
+      u_password: hashedPassword,
       u_type: "buyer",
-      u_isVerified: true,
-      // u_cart: {
-      //   product_inCart: {
-      //     id: "pro1231",
-      //   },
-      // },
-      // u_orders: {
-      //   products_delivered: {
-      //     id: "pro1232",
-      //     payment: "UPI",
-      //   },
-      //   products_canceled: { id: "pro1233" },
-      // },
+      u_isVerified: false,
     });
     const result = await doc.save();
     console.log(result);
-  } catch (err) {
-    return err;
+    console.log("Logged In Successfully");
+  } catch (error) {
+    console.log("Mongo Error :>> ", error);
+    return error;
   }
 };
 
 //For Read Operation
-const getUser = async () => {
+const getUser = async ({ email, password }) => {
   try {
-    const result = await User.find({ u_isVerified: true }).select({
-      u_name: 1,
-      u_email: 1,
-    });
-    console.log("result :>> ", result);
+    const result = await User.findOne({ u_email: email });
+    console.log("MongoDb :>> ", "User dataBase Found");
+    return result;
   } catch (error) {
-    console.log("error :>> ", error.message);
+    console.log("error :>> ", error);
+    return error;
   }
 };
 
