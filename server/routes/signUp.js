@@ -1,5 +1,6 @@
 const { createUser } = require("../models/CRUD_User");
 const { User } = require("../models/Schema");
+const sendMail = require("../mail/sendmails");
 
 const router = require("express").Router();
 
@@ -9,6 +10,10 @@ router.post("/", async (req, res) => {
   if (user) {
     return res.status(409).send({ message: "The given email already Exist!" });
   }
+
+  sendMail();
+  // .then((result) => console.log("Email sent...", result))
+  // .catch((error) => console.log(error.message));
 
   const temp = await createUser({ email, fname, lname, password });
   if (!temp) {

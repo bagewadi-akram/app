@@ -14,6 +14,7 @@ const signUp = require("./routes/signUp");
 
 
 
+
 //MiddleWares
 app.use(express.json());
 app.use(cors());
