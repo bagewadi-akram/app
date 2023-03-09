@@ -20,7 +20,7 @@ function SignIn() {
   const [error, setError] = useState("");
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
-  const url = "http://localhost:8080/signIn";
+  const url = "http://localhost:8080/user/signIn";
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
   };
@@ -35,7 +35,7 @@ function SignIn() {
       });
       const { message } = temp.data;
       alert(message);
-      if (temp.status == 200) {
+      if (temp.status === 200) {
         dispatch({
           type: "SET_USER",
           user: { email: data.get("email"), password: data.get("pass") },
@@ -66,7 +66,7 @@ function SignIn() {
               className=" border border-danger rounded  text-danger ps-2 pt-1 pb-1 d-flex align-items-center"
               style={{ backgroundColor: "#e8342721" }}
             >
-              <ErrorIcon sx={{ padding: "2px" ,marginRight:"2px" }} />
+              <ErrorIcon sx={{ padding: "2px", marginRight: "2px" }} />
               {error}
             </strong>
           )}

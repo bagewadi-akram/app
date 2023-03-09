@@ -1,6 +1,7 @@
 require("dotenv").config();
 const nodemailer = require("nodemailer");
 const { google } = require("googleapis");
+const { OAuth2 } = google.auth;
 
 // These id's and secrets should come from .env file.
 const CLIENT_ID =
@@ -8,19 +9,27 @@ const CLIENT_ID =
 const CLIENT_SECRET = "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";
 const REDIRECT_URI = "https://developers.google.com/oauthplayground";
 const REFRESH_TOKEN =
-  "4/0AWtgzh4QgLUVbkqdum53tNC6LLDzehz6FewksokLu9cuRFlKcXM3xl070WQNQto65Txttg";
+  "4/0AWtgzh5-LOOYOikZJ6qbomRmduusxI00QlATLCngMI3OtApmGQw9SXd7o9QBccvM7XF1xw";
 
-const oAuth2Client = new google.auth.OAuth2(
-  CLIENT_ID,
-  CLIENT_SECRET,
-  REDIRECT_URI
-);
+const oAuth2Client = new OAuth2(CLIENT_ID, CLIENT_SECRET, REDIRECT_URI);
 oAuth2Client.setCredentials({ refresh_token: REFRESH_TOKEN });
+const authUrl = oAuth2Client.generateAuthUrl({
+  access_type: "offline",
+  scope: ["https://oauth2.googleapis.com/token"],
+});
+
 
 async function sendMail() {
+  console.log('authUrl :>> ', authUrl);
+  // const { tokens } = await oAuth2Client.getToken(authUrl);
+  const oauth2 = google.oauth2({
+    auth: oAuth2Client,
+    version: "v2",
+  });
+  const { data } = await  oAuth2Client.getAccessToken();
+console.log('data :>> ', data);
   try {
-    const accessToken = await oAuth2Client.getAccessToken();
-    // console.log("accessToken :>> ", accessToken);
+    const accessToken = data;
     const transport = nodemailer.createTransport({
       service: "gmail",
       auth: {

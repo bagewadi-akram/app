@@ -3,29 +3,38 @@ import React, { useState } from "react";
 import TextField from "@mui/material/TextField";
 import { Button } from "@mui/material";
 import UploadIcon from "@mui/icons-material/Upload";
+import axios from "axios";
 
 function AddProduct() {
   const [formData, setFormData] = useState({
-    productName: "",
-    sellerName: "",
+    title: "",
+    seller: "",
     description: "",
     category: "",
     delivery: "",
     stock: "",
     price: "",
     discount: "",
+    image1: "",
   });
+  const url = "http://localhost:8080/product/addProduct";
   const handleChange = (event) => {
-    event.preventDefault()
+    event.preventDefault();
     const { name, value } = event.target;
     setFormData((prevState) => ({
       ...prevState,
       [name]: value,
     }));
   };
-  const handleClick = () => {
-      console.log("formData :>> ", formData);
-      alert("Submitted Successfully")
+
+  const handleClick = async () => {
+    console.log("fromData :>> ", formData);
+    try {
+      const result = await axios.post(url, formData);
+      console.log("result :>> ", result);
+    } catch (error) {
+      console.log(error);
+    }
   };
   return (
     <div className="addProduct-page d-flex flex-column align-items-center ">
@@ -33,17 +42,17 @@ function AddProduct() {
         Enter the Details Of Product....
       </h1>
 
-      <form>
+      <form method="post" enctype="multipart/form-data">
         <div className="d-flex justify-content-between">
           <TextField
             sx={{ width: 600, margin: 2 }}
             margin="normal"
             helperText="Enter the product name..."
             variant="standard"
-            name="productName"
+            name="title"
             label="Product Name"
             onChange={handleChange}
-            value={formData.productName}
+            value={formData.title}
             required="true"
           />
           <TextField
@@ -51,10 +60,10 @@ function AddProduct() {
             margin="normal"
             helperText="Enter the product title..."
             variant="standard"
-            name="sellerName"
+            name="seller"
             label="Seller Name *"
             onChange={handleChange}
-            value={formData.sellerName}
+            value={formData.seller}
             required="true"
           />
         </div>
@@ -126,7 +135,7 @@ function AddProduct() {
             label="Discount Price (If Any)*"
             onChange={handleChange}
             value={formData.discount}
-          />{" "}
+          />
           <Button variant="standard" component="label">
             <UploadIcon /> Upload DataSheet
             <input type="file" hidden />
@@ -134,26 +143,15 @@ function AddProduct() {
         </div>
         <div className="d-flex justify-content-between mt-4 border p-2">
           <h4>Upload Product Images</h4>
-          <Button variant="standard" component="label">
-            <UploadIcon /> <strong>Image 1</strong>
-            <input type="file" hidden />
-          </Button>
-          <Button variant="standard" component="label">
-            <UploadIcon /> <strong>Image 2</strong>
-            <input type="file" hidden />
-          </Button>
-          <Button variant="standard" component="label">
-            <UploadIcon /> <strong>Image 3</strong>
-            <input type="file" hidden />
-          </Button>
-          <Button variant="standard" component="label">
-            <UploadIcon /> <strong>Image 4</strong>
-            <input type="file" hidden />
-          </Button>
-          <Button variant="standard" component="label">
-            <UploadIcon /> <strong>Image 5</strong>
-            <input type="file" hidden />
-          </Button>
+          {/* <Button variant="standard" component="label"> */}
+            {/* <UploadIcon /> <strong>Image 1</strong> */}
+            <input
+              type="file"
+              name="image1"
+              onChange={handleChange}
+              value={formData.image1}
+            />
+          {/* </Button> */}
         </div>
         <div className="d-flex justify-content-end">
           <Button

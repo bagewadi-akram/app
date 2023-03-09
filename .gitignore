@@ -6,3 +6,4 @@
 **/.env
 
 /client/src/Header/images
+/client/.env

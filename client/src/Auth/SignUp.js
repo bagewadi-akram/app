@@ -13,6 +13,8 @@ import FormControl from "@mui/material/FormControl";
 import { Checkbox } from "@mui/material";
 import axios from "axios";
 import ErrorIcon from "@mui/icons-material/Error";
+import Mail from "./Mail";
+import emailjs from "@emailjs/browser";
 
 function SignUp() {
   //eslint-disable-next-line
@@ -20,7 +22,7 @@ function SignUp() {
   const [error, setError] = useState("");
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
-  const url = "http://localhost:8080/signUp";
+  const url = "http://localhost:8080/user/signUp";
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
   };
@@ -30,15 +32,15 @@ function SignUp() {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     try {
-      const temp = await axios.post(url, {
+      const response = await axios.post(url, {
         fname: data.get("fname"),
         lname: data.get("lname"),
         email: data.get("email"),
         password: data.get("pass"),
       });
-      const { message } = temp.data;
+      const { message, token, temp } = response.data;
       alert(message);
-      if (temp.status == 200) {
+      if (response.status === 200) {
         dispatch({
           type: "SET_USER",
           user: {
@@ -48,6 +50,7 @@ function SignUp() {
             password: data.get("pass"),
           },
         });
+        await Mail({ token, temp });
         navigate("/signIn");
       }
     } catch (error) {

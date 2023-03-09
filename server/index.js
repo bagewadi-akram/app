@@ -1,25 +1,25 @@
+//Connection to database
+require("./config/database");
+
 require("dotenv").config();
 const cors = require("cors");
 const express = require("express");
-const connection = require("./models/connection");
-
-//Connection To DataBase
-connection();
 
 //Initialization
 const app = express();
 const port = process.env.PORT;
-const signIn = require("./routes/signIn");
-const signUp = require("./routes/signUp");
 
+//require router **
+const UserRouter = require("./routes/user");
+const ProductRouter = require("./routes/product");
 
-
-
-//MiddleWares
+//express config cors and body parser
 app.use(express.json());
 app.use(cors());
-app.use("/signIn", signIn);
-app.use("/signUp", signUp);
+
+//MiddleWares
+app.use("/user", UserRouter);
+app.use("/product", ProductRouter);
 
 //Start Node Server
-app.listen(port, console.log(`Listening to ${port} port....`));
+app.listen(port, console.log(`localhost:${port} >> Running Node Server`));
